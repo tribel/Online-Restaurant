@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+
+</h:head>
+<h:body>
+	<ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
+		<ui:define name="content">
+
+	#{menuBean.getAllMenu()}
+	#{menuBean.getAllCategories()}
+<h:form>
+			
+		<p:panel rendered="#{usersBean.usRole != 2}">
+			#{usersBean.backToLogin()}
+		</p:panel>	
+		<p:panel  style="width:96%; background-image: url('resources/images/back.jpg')">
+
+					<h:panelGrid columns="5" style="margin-bottom:10px"
+						cellpadding="10" columnClasses="label, value">
+
+						<p:commandButton value="Add" action="#{menuBean.addDish}"
+							icon="ui-icon-plus" style="width:80px" />
+
+						<p:selectOneMenu value="#{menuBean.data}" onchange="submit()"
+							valueChangeListener="#{menuBean.itemChange}">
+							<f:selectItems value="#{menuBean.categories}" />
+						</p:selectOneMenu>
+					
+					
+		
+ 		#{menuBean.getMenuByCategory( menuBean.tx )}
+		
+				</h:panelGrid>
+					<p:dataTable var="di" value="#{menuBean.dishes}" style="width:97%;">
+						<p:column headerText="Name">
+							<h:outputText value="#{di.name}" />
+						</p:column>
+
+						<p:column headerText="Price" style="width:50px;">
+							<h:outputText value="#{di.price}" />
+						</p:column>
+
+						<p:column headerText="Category">
+							<h:outputText value="#{di.category}" />
+						</p:column>
+
+						<p:column headerText="Active">
+							<h:outputText value="#{di.active}" />
+						</p:column>
+
+						<p:column headerText="KitchenMade" style="width:150px;">
+							<h:outputText value="#{di.kitchenMade}" />
+						</p:column>
+
+						<p:column headerText="" style="width:80px;">
+							<p:commandButton value="Edit"
+								action="#{menuBean.editDish(di.id)}" icon="ui-icon-pencil"
+								style="width:80px" />
+							
+
+
+						</p:column>
+						<p:column style="width:100px;">
+						<p:commandButton value="Delete" oncomplete="PF('dlg').show()"
+								icon="ui-icon-closethick" style="width:100px" update="display" />
+
+							<p:dialog header="Do you really want to delete? ?" modal="true"
+								showEffect="fade" widgetVar="dlg" resizable="false"
+								style="width=100px;">
+								<p:panelGrid columns="2" id="display" style="width:250px;">
+
+									<p:commandButton value="Yes"
+										actionListener="#{menuBean.deleteDish(di.id)}"
+										icon="ui-icon-check" update="@(form)"
+										onclick="PF('dlg').hide()" />
+
+									<p:commandButton value="No" action="menu"
+										icon="ui-icon-closethick" update="@(form)" />
+
+								</p:panelGrid>
+							</p:dialog>
+						</p:column>
+
+					</p:dataTable>
+
+				</p:panel>
+
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

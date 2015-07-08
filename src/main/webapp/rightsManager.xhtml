@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Staff List</title>
+
+</h:head>
+<h:body>
+	<ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
+		<ui:define name="content">
+			#{usersBean.refreshList()}
+
+			<h:form>
+
+				<p:panel rendered="#{usersBean.usRole != 3}">
+					#{usersBean.backToLogin()}
+				</p:panel>
+
+				<p:panel
+					style="width:96%; background-image: url('resources/images/back.jpg')">
+
+					<h:panelGrid columns="1" style="margin-bottom:10px"
+						cellpadding="10" columnClasses="label, value">
+						<p:dataTable var="staff" value="#{usersBean.users}"
+							style="font-size: 18px; width:932px;">
+							<p:column headerText="Name" style="width:80px;">
+								<h:outputText value="#{staff.name}" />
+							</p:column>
+
+							<p:column headerText="Login" style="width:80px;">
+								<h:outputText value="#{staff.login}" />
+							</p:column>
+
+							<p:column headerText="Email">
+								<h:outputText value="#{staff.email}" />
+							</p:column>
+
+							<p:column headerText="Telephone" style="width:90px;">
+								<h:outputText value="#{staff.telephone}" />
+							</p:column>
+
+							<p:column headerText="Address">
+								<h:outputText value="#{staff.address}" />
+							</p:column>
+
+							<p:column headerText="Role">
+								<h:outputText value="#{staff.role.name}" />
+							</p:column>
+
+							<p:column headerText="Active" style="width:70px;">
+								<h:outputText value="#{staff.active}" />
+							</p:column>
+							<p:column headerText="" style="width:80px;">
+								<p:commandButton value="Edit"
+									action="#{usersBean.editUserS(staff.id)}" icon="ui-icon-pencil"
+									style="width:80px" />
+							</p:column>
+
+						</p:dataTable>
+
+						<p:commandButton value="Add staff"
+							action="createStaff" icon="ui-icon-plus"
+							 />
+					</h:panelGrid>
+				</p:panel>
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

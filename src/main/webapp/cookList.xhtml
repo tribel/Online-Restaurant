@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Menu</title>
+
+</h:head>
+<h:body>
+	<ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
+		<ui:define name="content">
+			<h:form>
+				#{cookBean.refreshList()}
+				
+				<p:panel rendered="#{usersBean.usRole != 4}">
+					#{usersBean.backToLogin()}
+				</p:panel>	
+
+				<p:panel  style="width:96%; background-image: url('resources/images/back.jpg')">
+					<p:dataTable var="cook" value="#{cookBean.kitchenDishList}">
+
+						<p:column headerText="Name">
+							<h:outputText value="#{cook.name}" />
+						</p:column>
+
+						<p:column headerText="Time">
+							<h:outputText value="#{cook.time}" />
+						</p:column>
+
+
+						<p:column headerText="">
+							<p:commandButton value="Done"
+								actionListener="#{cookBean.setDishAsDone(cook.orderDishId)}"
+								update="@(form)">
+
+
+							</p:commandButton>
+						</p:column>
+
+					</p:dataTable>
+				</p:panel>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

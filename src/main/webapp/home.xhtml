@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:body>
+	<ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
+		<ui:define name="content">
+			<br />
+			<br />  
+		<h:link value="MEnu Admin List" outcome="menu" />  
+		<br />  
+		<h:link value="New Dish" outcome="newDish" />
+		<br />  
+		<h:link value="New User" outcome="newUser" /><br />  
+		<h:link value="Sign in" outcome="logIn" /><br />  
+		<h:link value="Rights Manager" outcome="rightsManager" /><br />  
+		<h:link value="Cook page" outcome="cookList" /><br />  
+		<h:link value="Delivery page" outcome="deliveryList" /><br />  
+		<h:link value="Customer menu" outcome="customerMenu" /><br />  
+		<h:link value="Analytic" outcome="analytic" /><br />  
+		<h:graphicImage value="resources/images/mers.png" />
+			<br />
+			<br />
+			
+			<br />
+			
+			<br />
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

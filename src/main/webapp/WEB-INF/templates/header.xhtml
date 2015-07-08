@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+	<ui:composition>
+		<h:form>
+
+	
+			<p:commandLink id="HeadLink" action="#{usersBean.banner()}"> 
+					
+					<h:graphicImage value="resources/images/header.jpg"
+				style="height:191px;" />
+				</p:commandLink>
+
+			<p:tabMenu style="width:965px">
+				<p:menuitem value="Menu" outcome="customerMenu">
+				</p:menuitem>
+				<p:menuitem value="Contacts" outcome="contact">
+
+				</p:menuitem>
+
+
+				<p:menuitem value="LogIn" outcome="logIn"
+					rendered="#{empty usersBean.user.login}" />
+
+
+
+				<p:menuitem value="LogOut" action="#{usersBean.logOut}"
+					rendered="#{usersBean.user.login != null}" update="@(form)" />
+
+
+				<p:menuitem value="Edit Profile" action="#{usersBean.editUser( usersBean.userId )}"
+					rendered="#{usersBean.user.login != null}" update="@(form)" />
+				
+				
+				<p:menuitem value="Sign Up" outcome="newUser">
+
+				</p:menuitem>
+
+
+
+			
+
+				<f:facet name="options">
+
+					<p:outputLabel value="Hello, #{usersBean.user.name} "
+						rendered="#{not empty usersBean.user.login}" />
+
+
+
+				</f:facet>
+
+			</p:tabMenu>
+			<p:outputLabel value="Hello, #{usersBean.nameUs}"
+				rendered="#{not empty usersBean.user.login}" />
+			<br />
+
+
+
+
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

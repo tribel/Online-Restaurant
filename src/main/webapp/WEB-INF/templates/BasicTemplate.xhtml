@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title><ui:insert name="title">Restaurant</ui:insert></title>
+	<!-- 	<h:outputStylesheet library="css" name="style.css" />   -->
+	<link rel="shortcut icon" type="image/x-icon" href="#{resource['images/favicon.ico']}"/>
+</h:head>
+<h:body>
+	<!--   <center> -->
+ 	<div style="width:1000px; margin:0 auto;"> 
+	
+
+		<ui:insert name="header">
+			<ui:include src="header.xhtml" />
+		</ui:insert>
+	
+		<ui:insert name="content" >
+			
+			<ui:include src="content.xhtml" />
+		
+		</ui:insert>
+
+	<div
+		style="border-width: 2px; border-color: black; ">
+		<ui:insert name="footer">
+			<ui:include src="footer.xhtml" />
+		</ui:insert>
+	</div>
+	<!--   </center>  -->
+	
+ </div>  
+</h:body>
+</html>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Menu</title>
+
+</h:head>
+<h:body>
+	<ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
+		<ui:define name="content">
+			<h:form>
+
+				<p:panel rendered="#{usersBean.usRole != 5}">
+					#{usersBean.backToLogin()}
+				</p:panel>
+
+				<p:panelGrid columns="1" cellpadding="10" style="width=800px">
+					<p:dataTable var="di" value="#{analyticBean.tableTotalReport}"
+						style="width:97%;">
+						<p:column headerText="Date">
+							<h:outputText value="#{di.dayDate}" />
+						</p:column>
+
+						<p:column headerText="Number">
+							<h:outputText value="#{di.orderCount}" />
+						</p:column>
+
+						<p:column headerText="Sum">
+							<h:outputText value="#{di.totalSum}" />
+						</p:column>
+					</p:dataTable>
+				</p:panelGrid>
+				<p:commandButton value="Finish" icon="ui-icon-check"
+					action="analytic" />
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

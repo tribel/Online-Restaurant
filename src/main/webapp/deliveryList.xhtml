@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Menu</title>
+
+</h:head>
+<h:body>
+	<ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
+		<ui:define name="content">
+			#{deliveryBean.getReadyForShipmentList()}
+			<h:form>
+
+				<p:panel rendered="#{usersBean.usRole != 6}">
+					#{usersBean.backToLogin()}
+				</p:panel>
+
+				<p:panel
+					style="width:96%; background-image: url('resources/images/back.jpg')">
+
+
+
+					<p:dataTable var="delivery" value="#{deliveryBean.deliverList}">
+						<p:growl id="msgs" />
+						<p:column headerText="Time">
+							<h:outputText value="#{delivery.time}" />
+						</p:column>
+
+						<p:column headerText="Address">
+							<h:outputText value="#{delivery.address}" />
+						</p:column>
+
+
+						<p:column headerText="">
+							<p:commandButton
+								value="Set As #{deliveryBean.refreshButtonStatus(delivery.orderId)}"
+								actionListener="#{deliveryBean.setOrderStatus(delivery.orderId)}"
+								update="@(form)">
+
+								<p:ajax update="msgs" listener="#{deliveryBean.addAjaxMessage}" />
+							</p:commandButton>
+						</p:column>
+
+
+					</p:dataTable>
+					<p:separator />
+					<p:commandButton value="Redirecting to Ready for shipment list"
+						actionListener="#{deliveryBean.getReadyForShipmentList()}"
+						update="@(form)" icon="ui-icon-transferthick-e-w" />
+					<p:commandButton value="Redirecting to Delivering List"
+						actionListener="#{deliveryBean.getDeliveringList()}"
+						update="@(form)" icon="ui-icon-transferthick-e-w" />
+
+				</p:panel>
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

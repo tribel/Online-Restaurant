@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>New Dish</title>
+
+</h:head>
+<h:body>
+	<ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
+		<ui:define name="content">
+
+			<h:form>
+
+				<p:panel rendered="#{usersBean.usRole != 2}">
+					#{usersBean.backToLogin()}
+				</p:panel>
+
+				<p:panel
+					style="width:96%; background-image: url('resources/images/back.jpg')">
+
+					<p:panel header="New Dish" style="width:96% ">
+
+						<h:panelGrid columns="1" id="editDish" cellpadding="5">
+							<p:outputLabel for="dName" value="Name:" />
+							<p:inputText id="dName" value="#{menuBean.dish.name}"
+								required="true" label="Name"
+								requiredMessage="#{messageBean.nameRequired}">
+							</p:inputText>
+							<p:message for="dName" style="color:red" />
+
+							<p:outputLabel for="dPrice" value="Price:" />
+							<p:inputText id="dPrice" value="#{menuBean.dish.price}"
+								label="Price" required="true"
+								requiredMessage="#{messageBean.priceRequired}"
+								validatorMessage="#{messageBean.priceRange}">
+								<f:validateDoubleRange minimum="1.0" />
+							</p:inputText>
+							<p:message for="dPrice" style="color:red" />
+
+							<p:outputLabel value="Category:" for="dCategory" />
+							<p:autoComplete id="dCategory" dropdown="true"
+								value="#{menuBean.dish.category}"
+								completeMethod="#{menuBean.completeCategory}" />
+
+
+							<p:outputLabel for="dActive" value="Set Active:" />
+							<p:selectOneRadio id="dActive" value="#{menuBean.dish.active}"
+								required="true" requiredMessage="#{messageBean.activeRequired}">
+								<f:selectItem itemLabel="active" itemValue="active" />
+								<f:selectItem itemLabel="nonActive" itemValue="nonActive" />
+							</p:selectOneRadio>
+							<p:message for="dActive" style="color:red" />
+
+							<p:outputLabel for="dKitchenMade" value="Set Made:" />
+							<p:selectOneRadio id="dKitchenMade"
+								value="#{menuBean.dish.kitchenMade}" required="true"
+								requiredMessage="#{messageBean.kitchenRequired}">
+								<f:selectItem itemLabel="kitchenMade" itemValue="kitchenMade" />
+								<f:selectItem itemLabel="NonKitchenMade"
+									itemValue="NonKitchenMade" />
+							</p:selectOneRadio>
+							<p:message for="dKitchenMade" style="color:red" />
+
+
+						</h:panelGrid>
+
+						<p:commandButton action="#{menuBean.saveDish}" update="@form"
+							value="Save" />
+					</p:panel>
+				</p:panel>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

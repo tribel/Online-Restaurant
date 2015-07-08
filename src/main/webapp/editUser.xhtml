@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Registration</title>
+
+</h:head>
+<h:body>
+	<ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
+		<ui:define name="content">
+
+			<h:form>
+
+				<p:panel rendered="#{usersBean.usRole != 3}">
+					#{usersBean.backToLogin()}
+				</p:panel>
+
+				<p:panel
+					style="width:96%; background-image: url('resources/images/back.jpg')">
+
+					<h:panelGrid columns="1" id="editUser" cellpadding="5">
+
+						<p:outputLabel for="uActive" value="Set Active:" />
+						<p:selectOneRadio id="uActive" value="#{usersBean.user.active}"
+							required="true" requiredMessage="#{messageBean.activeRequired}">
+							<f:selectItem itemLabel="active" itemValue="active" />
+							<f:selectItem itemLabel="nonActive" itemValue="nonActive" />
+						</p:selectOneRadio>
+						<p:message for="uActive" style="color:red" />
+
+
+
+						<p:outputLabel value="Roles:" for="uRole" />
+						<p:autoComplete id="uRole" dropdown="true"
+							value="#{usersBean.user.role.name}"
+							completeMethod="#{usersBean.refreshRoleName}" />
+
+
+					</h:panelGrid>
+
+					<p:commandButton action="#{usersBean.saveUser}" value="Save" />
+				</p:panel>
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

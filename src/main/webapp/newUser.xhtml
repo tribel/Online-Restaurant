@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Registration</title>
+
+</h:head>
+<h:body>
+	<ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
+		<ui:define name="content">
+
+			<h:form>
+				<p:tooltip />
+				<p:panel style="width:96%; background-image: url('resources/images/back.jpg')">
+					<h:panelGrid columns="1" id="newUser" cellpadding="5">
+						<p:outputLabel for="uName" value="Name:" />
+						<p:inputText id="uName" value="#{usersBean.user.name}"
+							required="true" label="Name"
+							requiredMessage="#{messageBean.userNameRequired}">
+						</p:inputText>
+						<p:message for="uName" style="color:red" />
+
+						<p:outputLabel for="uEmail" value="Email:" />
+						<p:inputText id="uEmail" value="#{usersBean.user.email}"
+							required="true" label="Email"
+							requiredMessage="#{messageBean.userEmailRequired}">
+						</p:inputText>
+						<p:message for="uEmail" style="color:red" />
+
+						<p:outputLabel for="uTelephone" value="Telephone:" />
+						<p:inputText id="uTelephone" value="#{usersBean.user.telephone}"
+							label="Telephone"
+							validatorMessage="#{messageBean.userTelephoneRange}">
+							<f:validateLength minimum="10" maximum="13" />
+						</p:inputText>
+						<p:message for="uTelephone" style="color:red" />
+
+						<p:outputLabel for="uAddress" value="Address:" />
+						<p:inputText id="uAddress" value="#{usersBean.user.address}"
+							required="true" label="Address"
+							requiredMessage="#{messageBean.userAddressRequired}">
+						</p:inputText>
+						<p:message for="uAddress" style="color:red" />
+
+						<p:outputLabel for="uBirthday" value="Birthday:" />
+						<p:calendar id="uBirthday" value="#{usersBean.date}"
+							showOn="button" navigator="true">
+						</p:calendar>
+
+
+
+						<p:outputLabel for="uLogin" value="Login:" />
+						<p:inputText id="uLogin" value="#{usersBean.user.login}"
+							required="true" label="Login"
+							requiredMessage="#{messageBean.userLoginRequired}">
+							<p:ajax event="keyup" update="out" listener="#{usersBean.flag}" />
+						</p:inputText>
+						<h:outputText id="out" value="#{usersBean.flag}" />
+						<p:message for="uLogin" style="color:red" />
+
+						<p:outputLabel for="uPassword" value="Password: " />
+						<p:password id="uPassword" value="#{usersBean.user.password}"
+							feedback="true" inline="true" required="true" label="Password">
+						</p:password>
+						<p:message for="uPassword" style="color:red" />
+
+					</h:panelGrid>
+					<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+					<p:commandButton id="saveU" action="#{usersBean.registrationUser}"
+						update="@form" value="Save" >
+					</p:commandButton>
+				</p:panel>
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

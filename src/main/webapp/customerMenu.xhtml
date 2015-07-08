@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Menu</title>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+<h:body styleClass="contentIm">
+	<ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
+		<ui:define name="content">
+		#{menuBean.getAllMenu()}
+		#{menuBean.getAllCategories()}
+		#{usersBean.userToOrderListSet()}
+			<h:form>
+			<p:panel style="width:96%; background-image: url('resources/images/back.jpg')">
+				<h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="10"
+					columnClasses="label, value">
+
+					<p:selectOneMenu value="#{menuBean.data}" onchange="submit()"
+						valueChangeListener="#{menuBean.itemChange}">
+						<f:selectItems value="#{menuBean.categories}" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+				
+ 		#{menuBean.getMenuByCategory( menuBean.tx )}
+				<h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="10"
+					columnClasses="label, value">
+					<p:dataScroller value="#{menuBean.dishesToScreen}" var="di" chunkSize="5"
+						scrollWidth="10" columns="3">
+						<f:facet name="header">
+           					 Scroll Down to Load More Dishes
+      				  </f:facet>
+						<p:separator />
+						<p:panelGrid columns="3" style="width:30%"
+							columnClasses="logo,detail">
+
+							<p:panelGrid columns="1" style="width:30%"
+								columnClasses="logo,detail">
+									<h:graphicImage
+									value="#{menuBean.setDishImage(di.get(0))}"  />
+											
+								<p:outputPanel>
+									<h:panelGrid columns="2" cellpadding="0">
+										<h:outputText value="Name:" />
+										<h:outputText value="#{di.get(0).name}" style="font-weight: bold" />
+
+										<h:outputText value="Price:" />
+										<h:outputText value="#{di.get(0).price}" style="font-weight: bold" />
+
+										<h:outputText value="KitchenMade:" />
+										<h:outputText value="#{di.get(0).kitchenMade}"
+											style="font-weight: bold" />
+
+
+										<p:commandButton value="To order"
+											action="#{menuBean.addDishToBasket(di.get(0))}" icon="ui-icon-cart"
+											style="width:100px" update="@(form)" />
+									</h:panelGrid>
+
+								</p:outputPanel>
+							</p:panelGrid>
+
+							<p:panelGrid columns="1" style="width:30%"
+								columnClasses="logo,detail" rendered="#{di.size() > 1}">
+								<h:graphicImage
+									value="#{menuBean.setDishImage(di.get(1))}"  />
+ 
+								<p:outputPanel>
+									<h:panelGrid columns="2" cellpadding="0">
+										<h:outputText value="Name:" />
+										<h:outputText value="#{di.get(1).name}" style="font-weight: bold" />
+
+										<h:outputText value="Price:" />
+										<h:outputText value="#{di.get(1).price}" style="font-weight: bold" />
+
+										<h:outputText value="KitchenMade:" />
+										<h:outputText value="#{di.get(1).kitchenMade}"
+											style="font-weight: bold" />
+
+
+										<p:commandButton value="To order"
+											action="#{menuBean.addDishToBasket(di.get(1))}" icon="ui-icon-cart"
+											style="width:100px" update="@(form)" />
+									</h:panelGrid>
+
+								</p:outputPanel>
+							</p:panelGrid>
+
+						</p:panelGrid>
+
+					</p:dataScroller>
+
+
+
+
+					<p:fieldset id="selectedDish" legend="Cart">
+						<p:outputPanel id="dropArea">
+							<h:outputText value="You cart is empty!"
+								rendered="#{empty  menuBean.orderBasket}" style="font-size24px;" />
+
+							<p:dataTable id="selectedDishTable" var="di"
+								value="#{menuBean.orderBasket}"
+								rendered="#{not empty menuBean.orderBasket}"
+								style="width:200px;">
+								<p:column headerText="Name">
+									<h:outputText value="#{di.name}" />
+								</p:column>
+
+								<p:column headerText="Price">
+									<h:outputText value="#{di.price}" />
+
+								</p:column>
+
+								<p:column>
+									<p:commandButton
+										actionListener="#{menuBean.deleteDishFromBasket(di)}"
+										icon="ui-icon-closethick" update="@(form)" />
+								</p:column>
+
+							</p:dataTable>
+							<h:outputText value="Total price: #{menuBean.orderSum}" />
+							<!--  <h:outputText value="Total price: #{usersBean.user.login}  #{usersBean.user.password}" />  -->
+
+
+							<p:panelGrid columns="1">
+								<p:commandButton value="Checkout " icon="ui-icon-check"
+									style="width:150px" oncomplete="PF('dlg').show()" />
+
+
+								<p:dialog header="Details" modal="true" showEffect="fade"
+									widgetVar="dlg" resizable="false" style="width=100px;">
+
+									<p:panelGrid columns="1">
+										<p:outputLabel  value="You are not authorized in the system:" rendered="#{empty usersBean.user.login}"/>
+										
+	
+										<p:outputLabel  value=" Enter a new address , if you want:" rendered="#{not empty usersBean.user.login}"/>
+										<p:outputLabel  value="Enter your address:" rendered="#{empty usersBean.user.login}"/>
+										
+										<p:inputText value="#{usersBean.user.address}">
+										</p:inputText>
+									</p:panelGrid>
+									
+									<p:commandButton value="Finish "
+										action="#{menuBean.createOrder(usersBean.login ,usersBean.password, usersBean.address)}"
+										icon="ui-icon-check" update="@(form)"
+										onclick="PF('dlg').hide()" rendered="#{not empty usersBean.user.login}"/>
+									
+									<p:commandButton value="CheckOut  without profile"
+										action="#{menuBean.createOrderNonAutorize(usersBean.address)}"
+										icon="ui-icon-check" update="@(form)"
+										onclick="PF('dlg').hide()" rendered="#{empty usersBean.user.login}"/>
+									
+
+								</p:dialog>
+
+							</p:panelGrid>
+
+
+
+
+
+
+
+						</p:outputPanel>
+					</p:fieldset>
+				</h:panelGrid>
+				
+				</p:panel>
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

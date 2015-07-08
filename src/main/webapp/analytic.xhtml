@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Menu</title>
+
+</h:head>
+<h:body>
+	<ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
+		<ui:define name="content">
+		#{analyticBean.getAllMenu()}
+			<h:form>
+
+				<p:panel rendered="#{usersBean.usRole != 5}">
+					#{usersBean.backToLogin()}
+				</p:panel>
+
+				<p:panel
+					style="width:96%; background-image: url('resources/images/back.jpg')">
+					<h:panelGrid columns="1" style="margin-bottom:10px"
+						cellpadding="10">
+						<p:outputLabel value="Select time period of report" />
+						<p:outputLabel for="aStart" value="Start date" />
+						<p:calendar id="aStart" value="#{analyticBean.startTime}"
+							showOn="button" navigator="true">
+						</p:calendar>
+
+						<p:outputLabel for="aEnd" value="End date" />
+						<p:calendar id="aEnd" value="#{analyticBean.endTime}"
+							showOn="button" navigator="true">
+						</p:calendar>
+					</h:panelGrid>
+
+					<p:commandButton value="See the graph report"
+						actionListener="#{analyticBean.calculateReport}" update="@(form)"
+						oncomplete="PF('dlg').show()" />
+
+					<p:dialog header="Details" modal="true" showEffect="fade"
+						widgetVar="dlg" resizable="false" style="width=800px;">
+						<p:panelGrid columns="1" cellpadding="10" style="width=800px">
+							<p:outputLabel value="Total sum : #{analyticBean.totalSum}" />
+							<p:outputLabel value="Total number of dishes: #{analyticBean.ordersCount}" />
+							<p:chart type="line" model="#{analyticBean.dateModel}"
+								style="width:800px;height:500px;" />
+						</p:panelGrid>
+						<p:commandButton value="Finish" icon="ui-icon-check"
+							update="@(form)" onclick="PF('dlg').hide()" />
+									
+					</p:dialog>
+					
+					<p:separator style="height:5px;" />
+
+					<h:panelGrid columns="1" style="margin-bottom:10px"
+						cellpadding="10">
+
+						<p:selectOneMenu value="#{analyticBean.category}" effect="fold"
+							editable="true">
+							<f:selectItem itemLabel="Select One" itemValue="" />
+							<f:selectItems value="#{analyticBean.categories}" />
+						</p:selectOneMenu>
+
+						<p:commandButton value="See the category report"
+							actionListener="#{analyticBean.getCategoryReport}"
+							update="@(form)" oncomplete="PF('dlgCateg').show()" />
+
+
+						<p:dialog header="Category details" modal="true" showEffect="fade"
+							widgetVar="dlgCateg" resizable="false" style="width=800px;">
+							<p:panelGrid columns="1" cellpadding="10" style="width=800px">
+								<p:outputLabel value="Total sum : #{analyticBean.totalSum}" />
+								<p:outputLabel
+									value="Total number of dishes: #{analyticBean.ordersCount}" />
+
+								<p:commandButton value="Finish" icon="ui-icon-check"
+									update="@(form)" onclick="PF('dlgCateg').hide()" />
+							</p:panelGrid>
+						</p:dialog>
+
+						<p:commandButton value="See the graph"
+							actionListener="#{analyticBean.getGrfikCategoryReport}"
+							update="@(form)" oncomplete="PF('dlgCategGraf').show()" />
+
+						<p:growl id="growl" showDetail="true" />
+						<p:dialog header="Category details" modal="true" showEffect="fade"
+							widgetVar="dlgCategGraf" resizable="false" style="width=800px;">
+							<p:panelGrid columns="1" cellpadding="10" style="width=800px">
+
+								<p:chart type="pie" model="#{analyticBean.pieModel1}"
+									style="width:400px;height:300px">
+									<p:ajax event="itemSelect" listener="#{analyticBean.itemSelect}"
+										update="growl" />
+								</p:chart>
+
+								<p:commandButton value="Finish" icon="ui-icon-check"
+									update="@(form)" onclick="PF('dlgCategGraf').hide()" />
+							</p:panelGrid>
+						</p:dialog>
+
+					</h:panelGrid>
+				</p:panel>
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

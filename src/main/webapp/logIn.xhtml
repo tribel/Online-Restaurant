@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+	<title>Registration</title>
+
+</h:head>
+
+<h:body>
+	<ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
+		<ui:define name="content">
+
+			<h:form>
+				<p:panel
+					style="width:96%; background-image: url('resources/images/back.jpg')">
+					<p:growl id="msg" />
+					<h:panelGrid columns="1" id="LogIn" cellpadding="5">
+
+						<p:outputLabel for="uLogin" value="Login:" />
+						<p:inputText id="uLogin" value="#{usersBean.user.login}"
+							required="true" label="Login"
+							requiredMessage="#{messageBean.userLoginRequired}">
+						</p:inputText>
+						<p:message for="uLogin" style="color:red" />
+
+						<p:outputLabel for="uPassword" value="Password: " />
+						<p:password id="uPassword" value="#{usersBean.user.password}"
+							required="true" label="Password"
+							requiredMessage="#{messageBean.userPasswordRequired}">
+						</p:password>
+						<p:message for="uPassword" style="color:red" />
+
+					</h:panelGrid>
+					<p:messages id="messagesLog" showDetail="true" autoUpdate="true"
+						closable="true" />
+					<p:commandButton action="#{usersBean.autorize}" update="@form"
+						value="Sign In">
+
+					</p:commandButton>
+
+				</p:panel>
+
+				<b:navBar brand="Brand" brandHref="#" inverse="true">
+					<b:navbarLinks>
+						<b:navLink value="Home" href="#"></b:navLink>
+						<b:navLink value="Link" href="#"></b:navLink>
+						<b:navLink value="Link" href="#"></b:navLink>
+					</b:navbarLinks>
+				</b:navBar>
+
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,37 @@
+a {
+	background-color: #ffffff;
+	color: #000000;
+	font-weight: bold;
+	font-size: 1.4em;
+	font-style: normal;
+}
+
+.merchantTable {
+	border-collapse: collapse;
+	border: 1px solid #ffffff;
+}
+
+.merchantTableHeader {
+	text-align: center;
+	background: none repeat scroll 0 0 #ff0080;
+	border-bottom: 1px solid #000000;
+	padding: 2px;
+}
+
+.merchantTableOddRow {
+	text-align: center;
+	background: none repeat scroll 0 0 #FFFFFF1;
+}
+
+.merchantTableEvenRow {
+	text-align: center;
+	background: none repeat scroll 0 0 #ffff00;
+}
+
+.contentIm {
+	background-image:url(https://eda.ua/assets/6d750769/i/grey-texture.jpg);
+	background-color: aqua;
+}
+
+
+
